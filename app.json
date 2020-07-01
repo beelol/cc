@@ -1,0 +1,12 @@
+{
+  "name": "cc",
+  "displayName": "cc",
+  "expo": {
+    "name": "cc",
+    "slug": "cc",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
