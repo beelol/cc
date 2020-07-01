@@ -1,31 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Button,
+  Dimensions,
+} from 'react-native';
 import { foodListings } from './data';
-import { useSafeArea, SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import FoodItem from './components/FoodItem';
 
 const UnprovidedApp = () => {
-  const safeAreaInsets = useSafeArea();
+  const screenWidth = Math.round(Dimensions.get('window').width);
 
   return (
-    <View
-      style={{
-        ...styles.container,
-        paddingTop: safeAreaInsets.top,
-        paddingBottom: safeAreaInsets.bottom,
-        paddingLeft: safeAreaInsets.left,
-        paddingRight: safeAreaInsets.right,
-      }}
-    >
-      <Text>Waw'poejawe;lkfmawer;klfmaewr;lkfm;</Text>
-      <FlatList>
-        {foodListings.map(listing => {
-          return <Text>This is a listing</Text>;
-        })}
-      </FlatList>
-      <Text>What is going on</Text>
+    <SafeAreaView style={styles.container}>
+      <Text>CALORIE CRUNCH</Text>
+      <FlatList
+        ItemSeparatorComponent={() => (
+          <View style={{ height: 16, backgroundColor: 'pink' }} />
+        )}
+        contentContainerStyle={{
+          width: screenWidth * 0.8,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        data={foodListings}
+        renderItem={FoodItem}
+        keyExtractor={item => item.id}
+      />
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row-reverse',
+        }}
+      >
+        <Button title="+" style={{ width: 20, height: 20, fontSize: 30 }}>
+          +
+        </Button>
+      </View>
+      <Text>Total Calories: </Text>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 };
 
