@@ -1,5 +1,6 @@
+import { v4 as getId } from 'uuid';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,12 +9,14 @@ import {
   Button,
   Dimensions,
 } from 'react-native';
-import { foodListings } from './data';
+import { foodListings as defaultFoodListings } from './data';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import FoodItem from './components/FoodItem';
 
 const UnprovidedApp = () => {
   const screenWidth = Math.round(Dimensions.get('window').width);
+
+  const [foodListings, setFoodListings] = useState(defaultFoodListings);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,7 +40,20 @@ const UnprovidedApp = () => {
           flexDirection: 'row-reverse',
         }}
       >
-        <Button title="+" style={{ width: 20, height: 20, fontSize: 30 }}>
+        <Button
+          onPress={() =>
+            setFoodListings([
+              ...foodListings,
+              {
+                name: 'test',
+                amount: 0,
+                id: getId(),
+              },
+            ])
+          }
+          title="+"
+          style={{ width: 20, height: 20, fontSize: 30 }}
+        >
           +
         </Button>
       </View>
