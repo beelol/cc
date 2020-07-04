@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, TextInput } from 'react-native';
 
-export default ({ item }) => (
+export default ({ item, onUpdate }) => (
   <View
     style={{
       display: 'flex',
@@ -11,7 +11,25 @@ export default ({ item }) => (
     }}
     key={item.id}
   >
-    <Text>{item.name}</Text>
-    <Text>{item.amount}</Text>
+    <TextInput
+      value={item.name}
+      style={{
+        backgroundColor: 'blue',
+        width: '50%',
+      }}
+      onChangeText={text => {
+        onUpdate({ ...item, name: text });
+      }}
+    ></TextInput>
+    <TextInput
+      value={item.amount}
+      style={{
+        backgroundColor: 'blue',
+        width: '50%',
+      }}
+      onChangeText={text => {
+        onUpdate({ ...item, amount: text });
+      }}
+    ></TextInput>
   </View>
 );

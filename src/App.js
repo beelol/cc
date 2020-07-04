@@ -13,10 +13,18 @@ import { foodListings as defaultFoodListings } from './data';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import FoodItem from './components/FoodItem';
 
+import { replaceById } from './util';
+
 const UnprovidedApp = () => {
   const screenWidth = Math.round(Dimensions.get('window').width);
 
-  const [foodListings, setFoodListings] = useState(defaultFoodListings);
+  const [foodListings, setFoodListings] = useState([...defaultFoodListings]);
+
+  const updateFoodListing = newListing =>
+    setFoodListings(replaceById(foodListings, newListing));
+
+  const addFoodListing = newListing =>
+    setFoodListings([...foodListings, newListing]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -31,7 +39,9 @@ const UnprovidedApp = () => {
           flexDirection: 'column',
         }}
         data={foodListings}
-        renderItem={FoodItem}
+        renderItem={item => (
+          <FoodItem item={item} onUpdate={updateFoodListing} />
+        )}
         keyExtractor={item => item.id}
       />
       <View
@@ -42,16 +52,13 @@ const UnprovidedApp = () => {
       >
         <Button
           onPress={() =>
-            setFoodListings([
-              ...foodListings,
-              {
-                name: 'test',
-                amount: 0,
-                id: getId(),
-              },
-            ])
+            addFoodListing({
+              name: 'Add a name',
+              amount: 0,
+              id: getId(),
+            })
           }
-          title="+"
+          title="Add an item"
           style={{ width: 20, height: 20, fontSize: 30 }}
         >
           +
